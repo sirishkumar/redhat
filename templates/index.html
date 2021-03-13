@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Github Notifications</title>
+</head>
+<body>
+<style>
+    .title {
+        font-weight: bold;
+    }
+</style>
+<h1>Hello World!</h1>
+<h2>Reviews</h2>
+
+{% for pr, link in reviews.items() %}
+    <div>
+        <span class="title">
+            {{ pr }}
+        </span>
+        <span class="link">
+            {{ link }}
+        </span>
+    </div>
+{% endfor %}
+
+<h2>Pull Request Status</h2>
+TODO: Show pull requests  status
+
+</body>
+</html>

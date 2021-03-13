@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Github Notifications</title>
+</head>
+<body>
+<style>
+    .title {
+        font-weight: bold;
+    }
+</style>
+<h1>Hello World!</h1>
+<h2>Reviews</h2>
+
+{% for notification in notifications %}
+    <div>
+        <span class="title">
+            {{ notification.repository.owner['login'] }}
+        </span>
+        <span>
+            {{ notification.subject['type'] }}
+        </span>
+        <span>
+            {{ notification.subject['title'] }}
+        </span>
+    </div>
+{% endfor %}
+
+<h2>Pull Request Status</h2>
+TODO: Show pull requests  status
+
+</body>
+</html>
