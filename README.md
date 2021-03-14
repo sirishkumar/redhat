@@ -2,6 +2,8 @@
 
 ## Approach 1: Using Docker Compose
 
+![Docker Networking](doc/images/docker_networking.png)
+
 ### Security
 
 #### Using USER option in Dockerfile
