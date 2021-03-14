@@ -2,4 +2,4 @@ flask
 sqlalchemy
 passlib
 ghapi
-mysql-connector-python
+pymysql

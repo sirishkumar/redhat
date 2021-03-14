@@ -1,56 +1,64 @@
+import json
+import os
+import sys
+
+from data import db_session
+from data.githubapitoken import GithubAPIToken
 from views.github_helper import Sanity
 import flask
 from flask import Flask, request
-import mysql.connector
+import sqlalchemy.orm
 
+folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, folder)
 app = Flask(__name__)
 
-
-def get_token():
-    config = {
-        'user': 'root',
-        'password': 'root',
-        'host': 'db',
-        'port': '3306',
-        'database': 'userdb'
-    }
-    connection = mysql.connector.connect(**config)
-    cursor = connection.cursor()
-    cursor.execute('SELECT token FROM githubcredentials where uid=1')
-    token = cursor.fetchone()[0]
-    cursor.close()
-    connection.close()
-    return token
+@app.route('/', methods=['GET'])
+def index():
+    return flask.render_template('index.html')
 
 
-@app.route('/')
-def hello_world():
-    reviews = {
-                "PR-24": "http://github.com/sirishkumar/project/PR-24",
-                "PR-25": "http://github.com/sirishkumar/project/PR-25"
-               }
-    return flask.render_template('index.html', reviews=reviews)
+@app.route('/user', methods=['POST'])
+def user():
+    data = request.data
+    data_string = data.decode('utf-8')
+    data_dict = json.loads(data_string)
+
+    apitoken = GithubAPIToken()
+    apitoken.id = data_dict['user']
+    apitoken.email = data_dict['email']
+    apitoken.hashed_token = data_dict['token']
+
+    session: sqlalchemy.orm.Session = db_session.create_session()
+    session.add(apitoken)
+    session.commit()
+
+    return "User created successfully", 200
 
 
-@app.route('/notifications/<uid>')
-def github_notifications(uid: int):
-    print(uid)
-    token = get_token()
-    sanity = Sanity(token)
+
+@app.route('/notifications/<username>')
+def github_notifications(username: int):
+    session = db_session.create_session()
+    githubapi: GithubAPIToken = session.query(GithubAPIToken).filter_by(id=username).one()
+    sanity = Sanity(githubapi.hashed_token)
     notifications = sanity.get_notifications("sirishkumar")
     return flask.render_template('notifications.html', notifications=notifications)
 
 
-@app.route('/shopping')
-def index():
-    return flask.render_template('shoppint_list.html', key='Vegetables')
+def main():
+    setup_db()
+    app.run(host='0.0.0.0')
 
 
-@app.route('/shopping', methods=['POST'])
-def add_checklist():
-    desc = request.form.get('description')
-    return flask.render_template('shopping_list.html', key=desc)
+def setup_db():
+    db_file = os.path.join(
+        os.path.dirname(__file__),
+        'db',
+        'userdb.sqlite')
+
+    db_session.global_init_mysql()
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    main()

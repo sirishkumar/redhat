@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: webapp
+spec:
+  replicas: 2
+  selector:
+    name: flask_app
+  spec:
+    metadata:
+      name: flask_app
+    containers:
+      - name: Flask app
+        image: sirishkumar/flask_app:v1
+        ports:
+          - 5000
+    volumes:
+      - name: db_config
+        configMap:
+
