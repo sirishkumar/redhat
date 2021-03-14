@@ -13,6 +13,7 @@ folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, folder)
 app = Flask(__name__)
 
+
 @app.route('/', methods=['GET'])
 def index():
     return flask.render_template('index.html')
@@ -36,7 +37,6 @@ def user():
     return "User created successfully", 200
 
 
-
 @app.route('/notifications/<username>')
 def github_notifications(username: int):
     session = db_session.create_session()
@@ -47,8 +47,12 @@ def github_notifications(username: int):
 
 
 def main():
-    setup_db()
+    configure()
     app.run(host='0.0.0.0')
+
+
+def configure():
+    setup_db()
 
 
 def setup_db():
@@ -62,3 +66,5 @@ def setup_db():
 
 if __name__ == '__main__':
     main()
+else:
+    configure()
