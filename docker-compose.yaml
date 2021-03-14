@@ -2,11 +2,15 @@ version: "2"
 services:
   app:
     build: .
+    depends_on:
+      - db
     networks:
       - frontend
       - backend
     ports:
     - "5000:5000"
+    environment:
+      FLASK_ENV: development
     restart: on-failure
   db:
     image: mysql:5.7.33
@@ -19,6 +23,23 @@ services:
     volumes:
       - ./db:/docker-entrypoint-initdb.d/:ro
       - my-db:/var/lib/mysql
+  db_backup:
+    build: backup/
+    restart: always
+    volumes_from:
+      - backup
+    command: ["-l", "8", "-d", "8"]
+    environment:
+      MYSQL_HOST: db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: userdb
+    networks:
+      - backend
+  backup:
+    image: busybox
+    volumes:
+      - ./backup/data:/backup
 volumes:
   my-db:
 networks:
