@@ -1,5 +1,3 @@
-from typing import List, Dict
-
 from views.github_helper import Sanity
 import flask
 from flask import Flask, request
@@ -22,8 +20,6 @@ def get_token():
     token = cursor.fetchone()[0]
     cursor.close()
     connection.close()
-
-    print(token)
     return token
 
 
@@ -39,8 +35,8 @@ def hello_world():
 @app.route('/notifications/<uid>')
 def github_notifications(uid: int):
     print(uid)
-    #token = get_token()
-    sanity = Sanity("5047627c3b3b98bb7da1dded546933c0f2bebd86")
+    token = get_token()
+    sanity = Sanity(token)
     notifications = sanity.get_notifications("sirishkumar")
     return flask.render_template('notifications.html', notifications=notifications)
 
