@@ -1,3 +1,6 @@
 tests
 venv
 Dockerfile
+
+*.pyc
+**/__pycache__/
