@@ -4,6 +4,12 @@
 
 ![Docker Networking](doc/images/docker_networking.png)
 
+### Image Deployment
+For deployment using docker, secrets can be injected in to VM as environment variables and use them to log in to private
+registries(AWS and GCP provide custom solutions for saving the credentials)
+
+For kubernetes image pull secrets can be used for accessing stored credentials and registry details.
+
 ### Security
 
 #### Using USER option in Dockerfile
@@ -24,10 +30,17 @@ Without userns-mapping mapping of id inside container and outside host are ident
 
 [Hadolint](https://github.com/hadolint/hadolint) helps to implement best practices in Dockerfiles.
 
-## Approach 2: Using Kubernetes
+## Approach 2: Using Managed MySQL
 
-### Deployment files for Flask App
-### Deployment files for MySql operator
-#### PV for operator
-### Service for Flask and MySql operator
+Cloud providers such AWS, GCP and Azure provide managed relation database systems. Using these services
+- Provides easy scalability with Datacenters across different regions
+- Tools for backup and restore
 
+## Approach 3: Using Kubernetes
+
+Another approach to use Kubernetes to run Flask application and MYSQL cluster using MYSQL kubernetes operator
+using Persistent volumes.
+
+Example deployment diagram below
+
+![K8sDeployment](doc/images/k8s_deployment.png)
