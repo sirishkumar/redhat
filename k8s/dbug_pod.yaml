@@ -6,7 +6,7 @@ spec:
   volumes:
     - name: db
       persistentVolumeClaim:
-        claimName: mysql-pv-claim
+        claimName: db-pv-claim
   containers:
   - name: debug
     image: busybox

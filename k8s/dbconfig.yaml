@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: db-config
 data:
-  MYSQL_DATABASE: userdb
+  POSTGRES_DB: userdb
   
 
 
