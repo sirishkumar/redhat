@@ -16,7 +16,7 @@ spec:
       spec:
         containers:
           - name: flask-app
-            image: sirishkumar/flask_app:v2
+            image: sirishkumar/flask_app_postgres:v1
             env:
               - name: DB_SERVICE
                 value: dbservice
