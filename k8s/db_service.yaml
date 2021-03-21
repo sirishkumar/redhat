@@ -9,3 +9,15 @@ spec:
       targetPort: 3306
   selector:
     app: db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 5000
+  selector:
+    app: flask_app
