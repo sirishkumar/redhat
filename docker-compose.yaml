@@ -11,37 +11,26 @@ services:
     - "5000:5000"
     environment:
       FLASK_ENV: development
-      DB_SERVICE: db:3306
+      DB_SERVICE: db:5432
     restart: on-failure
   db:
-    image: mysql:5.7.33
+    image: library/postgres:13.2
 #    ports:
 #    - "32000:3306"
     networks:
       - backend
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: userdb
     volumes:
-      - my-db:/var/lib/mysql
-  db_backup:
-    build: backup/
-    restart: always
-    volumes_from:
-      - backup
-    command: ["-l", "8", "-d", "8"]
-    environment:
-      MYSQL_HOST: db
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_DATABASE: userdb
-    networks:
-      - backend
+      - db_volume:/var/lib/postgresql
   backup:
     image: busybox
     volumes:
       - ./backup/data:/backup
 volumes:
-  my-db:
+  db_volume:
 networks:
   frontend:
     driver: bridge

@@ -56,11 +56,6 @@ def configure():
 
 
 def setup_db():
-    db_file = os.path.join(
-        os.path.dirname(__file__),
-        'db',
-        'userdb.sqlite')
-
     db_session.global_init_mysql()
 
 

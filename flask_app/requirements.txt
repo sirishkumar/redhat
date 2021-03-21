@@ -1,5 +1,6 @@
 flask
-sqlalchemy
+SQLAlchemy==1.3.23
 passlib
 ghapi
-pymysql
+psycopg2
+sqlalchemy-utils
