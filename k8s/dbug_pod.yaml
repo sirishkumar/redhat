@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug-pod
+spec:
+  volumes:
+    - name: db
+      persistentVolumeClaim:
+        claimName: mysql-pv-claim
+  containers:
+  - name: debug
+    image: busybox
+    command: ['sleep', 'infinity']
+    volumeMounts:
+      - mountPath: /db
+        name: db

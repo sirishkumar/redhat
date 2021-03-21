@@ -1,12 +1,23 @@
-version: v1
+apiVersion: v1
 kind: Service
 metadata:
   name: dbservice
 spec:
   type: ClusterIP
   ports:
-    - name: http
-      port: 80
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
       targetPort: 5000
-    selector:
-      app: flask_app
+  selector:
+    app: flask_app
