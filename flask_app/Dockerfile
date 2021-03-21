@@ -1,8 +1,7 @@
-FROM python:3.9-alpine
+FROM python:3.9-buster
 
 WORKDIR /app
 
-RUN apk add --no-cache uwsgi-python3
 RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
 COPY requirements.txt /app
 RUN pip install -r requirements.txt
