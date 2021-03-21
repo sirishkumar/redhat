@@ -4,6 +4,7 @@ metadata:
   name: db-config
 data:
   POSTGRES_DB: userdb
+  POSTGRES_USER: postgres
   
 
 
