@@ -39,42 +39,34 @@ spec:
         app: db
     spec:
       containers:
-        - name: mysql-database
-          image: mysql:5.7.33
-          args:
-            - "--ignore-db-dir"
-            - "lost+found"
+        - name: postgres
+          image: library/postgres:13.2
           ports:
             - name: db
-              containerPort: 3306
+              containerPort: 5432
           env:
-          - name: MYSQL_DATABASE
+          - name: POSTGRES_DB
             valueFrom:
               configMapKeyRef:
                 name: db-config
-                key: MYSQL_DATABASE
-          - name: MYSQL_USER
+                key: POSTGRES_DB
+          - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
                 name: db-credentials
-                key: MYSQL_USER
-          - name: MYSQL_PASSWORD
+                key: POSTGRES_USER
+          - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: db-credentials
-                key: MYSQL_PASSWORD
-          - name: MYSQL_ROOT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: db-credentials
-                key: MYSQL_ROOT_PASSWORD
+                key: POSTGRES_PASSWORD
           volumeMounts:
-            - mountPath: /var/lib/mysql
+            - mountPath: /var/lib/postgresql
               name: db-storage
       volumes:
         - name: db-storage
           persistentVolumeClaim:
-            claimName: mysql-pv-claim
+            claimName: db-pv-claim
         - name: db-config
           
 
