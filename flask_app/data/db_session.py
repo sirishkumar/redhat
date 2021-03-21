@@ -1,3 +1,5 @@
+import os
+
 import sqlalchemy as sa
 import sqlalchemy.orm as orm
 from sqlalchemy.orm import Session
@@ -30,7 +32,8 @@ def global_init_mysql():
     if __factory:
         return
 
-    conn_str = "mysql+pymysql://{0}:{1}@db:3306/userdb".format("root", "root")
+    db_conn = os.environ.get("DB_SERVICE")
+    conn_str = "mysql+pymysql://{0}:{1}@{2}/userdb".format("root", "root", db_conn)
     engine = sa.create_engine(conn_str, echo=True)
     engine.execute("CREATE DATABASE IF NOT EXISTS userdb")
     engine.execute("USE userdb")
