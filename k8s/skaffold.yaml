@@ -1,0 +1,13 @@
+apiVersion: skaffold/v2beta13
+kind: Config
+metadata:
+  name: k-s
+deploy:
+  kubectl:
+    manifests:
+    - db_secrets.yaml
+    - db_service.yaml
+    - dbconfig.yaml
+    - dbug_pod.yaml
+    - pvc.yaml
+    - deployment.yaml
