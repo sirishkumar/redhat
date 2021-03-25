@@ -26,6 +26,12 @@ Without userns-mapping mapping of id inside container and outside host are ident
 - In case of volume mounting, files creating on the shared volumes will be with uid less privileged than on host
 - In case container is compromised, maximum privilege on host is limited to mapping 
  
+#### Scan for vulnerabilities
+
+[Trivy](https://github.com/aquasecurity/trivy#installation) is simple and Comprehensive Vulnerability Scanner for Containers and other Artifacts, Suitable for CI.
+
+![Trivy](doc/images/trivy.png)
+
 #### Dockerfile linting using Hadolint
 
 [Hadolint](https://github.com/hadolint/hadolint) helps to implement best practices in Dockerfiles.
