@@ -11,3 +11,4 @@ deploy:
     - dbug_pod.yaml
     - pvc.yaml
     - deployment.yaml
+    - postgres_network_policy.yaml
